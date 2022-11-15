@@ -210,6 +210,7 @@ class LoanBorrower extends Model
         $count_records = count($ballots);                
         foreach($ballots as $ballot)
         {
+          $mount_adjust = 0;
           foreach($adjusts as $adjust)
           {
             if($ballot->id == $adjust->adjustable_id)

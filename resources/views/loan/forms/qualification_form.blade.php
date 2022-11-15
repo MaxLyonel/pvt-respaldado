@@ -105,7 +105,7 @@
                 <td class="bg-grey-darker text-white">Bono Oriente</td>
                 <td class="bg-grey-darker text-white">Bono Seguridad Ciudadana</td>       
            </tr>        
-         @foreach($loan->ballot_affiliate($lender_affiliate->id)->ballot_adjusts as $ballot)      
+           @foreach($loan->borrower->first()->ballots->ballot_adjusts as $ballot)
            <tr>
                 <td>{{Carbon::parse($ballot['month_year'])->format('d/m/y')}}</td>
                 <td> {{Util::money_format($ballot['payable_liquid'])}}</td>
@@ -116,7 +116,7 @@
                 <td> {{Util::money_format($ballot['public_security_bonus'])}}</td>                       
            </tr>     
             @endforeach
-            @foreach($loan->ballot_affiliate($lender_affiliate->id)->average_ballot_adjust as $average_ballot)
+            @php($average = $loan->borrower->first()->ballots->average_ballot_adjust->first())
            <tr>
                 @php ($title_total = " ")
                 @if($loan->modality->loan_modality_parameter->quantity_ballots >1)
@@ -125,14 +125,13 @@
                     @php ($a = $title_total == "PROMEDIO" ? "DE LA":" ")
 
                 <td>Total {{$title_total}}</td>
-                <td> {{Util::money_format($average_ballot['average_payable_liquid'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_mount_adjust'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_border_bonus'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_position_bonus'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_east_bonus'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_public_security_bonus'])}}</td>          
+                <td> {{Util::money_format($average['average_payable_liquid'])}}</td>
+                <td> {{Util::money_format($average['average_mount_adjust'])}}</td>
+                <td> {{Util::money_format($average['average_border_bonus'])}}</td>
+                <td> {{Util::money_format($average['average_position_bonus'])}}</td>
+                <td> {{Util::money_format($average['average_east_bonus'])}}</td>
+                <td> {{Util::money_format($average['average_public_security_bonus'])}}</td>          
            </tr>
-           @endforeach
         @endif
         @if($lender_affiliate_loan->contributionable_type =="aid_contributions")
             <tr>
@@ -141,22 +140,21 @@
                 <td class="bg-grey-darker text-white">Monto de Ajuste</td>
                 <td class="bg-grey-darker text-white">Bono Renta Dignidad</td>          
            </tr>
-            @foreach($loan->ballot_affiliate($lender_affiliate->id)->ballot_adjusts as $ballot)
+           @foreach($loan->borrower->first()->ballots->ballot_adjusts as $ballot)
             <tr>
                 <td> {{Carbon::parse($ballot['month_year'])->format('d/m/y')}}</td> 
                 <td> {{Util::money_format($ballot['payable_liquid'])}}</td> 
                 <td> {{Util::money_format($ballot['mount_adjust'])}}</td>  
                 <td> {{Util::money_format($ballot['dignity_rent'])}}</td>                 
-            </tr >      
-             @endforeach
-            @foreach($loan->ballot_affiliate($lender_affiliate->id)->average_ballot_adjust as $average_ballot)
+            </tr >
+            @endforeach      
+            @php($average = $loan->borrower->first()->ballots->average_ballot_adjust->first())
             <tr>
                 <td>Total Promedio</td>
-                <td> {{Util::money_format($average_ballot['average_payable_liquid'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_mount_adjust'])}}</td>
-                <td> {{Util::money_format($average_ballot['average_dignity_rent'])}}</td>             
+                <td> {{Util::money_format($average['average_payable_liquid'])}}</td>
+                <td> {{Util::money_format($average['average_mount_adjust'])}}</td>
+                <td> {{Util::money_format($average['average_dignity_rent'])}}</td>             
              </tr>
-            @endforeach
         @endif
         @if($lender_affiliate_loan->contributionable_type == "loan_contribution_adjusts")
            <tr>
@@ -164,20 +162,19 @@
                 <td class="bg-grey-darker text-white">Liquido</td>
                 <td class="bg-grey-darker text-white">Monto de Ajuste</td>
            </tr>
-            @foreach($loan->ballot_affiliate($lender_affiliate->id)->ballot_adjusts as $ballot)        
+           @foreach($loan->borrower->first()->ballots->ballot_adjusts as $ballot)
             <tr>
                 <td>{{Carbon::parse($ballot['month_year'])->format('d/m/y')}}</td>  
                 <td>{{Util::money_format($ballot['payable_liquid'])}}</td> 
                 <td>{{Util::money_format($ballot['mount_adjust'])}}</td>            
             </tr >   
             @endforeach
-            @foreach($loan->ballot_affiliate($lender_affiliate->id)->average_ballot_adjust as $average_ballot)
+            @php($average = $loan->borrower->first()->ballots->average_ballot_adjust->first())
             <tr>
                 <td>Total Promedio</td>
-                <td> {{Util::money_format($average_ballot['average_payable_liquid'])}}</td> 
-                <td> {{Util::money_format($average_ballot['average_mount_adjust'])}}</td>            
+                <td> {{Util::money_format($average['average_payable_liquid'])}}</td> 
+                <td> {{Util::money_format($average['average_mount_adjust'])}}</td>            
              </tr>
-             @endforeach
         @endif
         @endforeach
     </table>

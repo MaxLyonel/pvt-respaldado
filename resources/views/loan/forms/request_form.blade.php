@@ -158,7 +158,7 @@
                 <td class="w-15">Estado</td>
             </tr>
             <tr>
-                <td class="data-row py-5">{{ $guarantor->title }} {{ $guarantor->full_name }}</td>
+                <td class="data-row py-5">{{ $guarantor->title && $guarantor->type=="affiliates" ? $guarantor->title : '' }} {{ $guarantor->full_name }}</td>
                 <td class="data-row py-5">{{ $guarantor->identity_card_ext }}</td>
                 <td class="data-row py-5">{{$guarantor->affiliate_state ? $guarantor->affiliate_state->affiliate_state_type->name : 'Pasivo'}}</td>
             </tr>
@@ -188,20 +188,22 @@
                 @else 
                 @php ($pasivo_guarantor = true )
                 @endif
-                <td>Categoría</td>
-                @if ($inactive)
-                <td colspan="{{$pasivo_guarantor ? 2 : 1}}">Tipo de Renta</td>
+                @if(!$pasivo_guarantor)
+                    <td>Categoría</td>
+                    @if ($inactive)
+                    <td colspan="{{$pasivo_guarantor ? 2 : 1}}">Tipo de Renta</td>
+                    @endif
+                </tr>
+                <tr>
+                @if ($guarantor->affiliate_state->affiliate_state_type->name != "Pasivo")
+                    <td class="data-row py-5" colspan="{{$inactive ? 1 : 2}}">{{ $guarantor->full_unit}}</td>
                 @endif
-            </tr>
-            <tr>
-            @if ($guarantor->affiliate_state->affiliate_state_type->name != "Pasivo")
-                <td class="data-row py-5" colspan="{{$inactive ? 1 : 2}}">{{ $guarantor->full_unit}}</td>
-            @endif
-                <td class="data-row py-5">{{ $guarantor->category ? $guarantor->category->name : '' }}</td>
-                @if ($inactive)
-                    <td colspan="{{$pasivo_guarantor ? 2 : 1}}" class="data-row py-5">{{ $guarantor->pension_entity ? $guarantor->pension_entity->name :''}}</td>
+                    <td class="data-row py-5">{{ $guarantor->category ? $guarantor->category->name : '' }}</td>
+                    @if ($inactive)
+                        <td colspan="{{$pasivo_guarantor ? 2 : 1}}" class="data-row py-5">{{ $guarantor->pension_entity ? $guarantor->pension_entity->name :''}}</td>
+                    @endif
+                </tr>
                 @endif
-            </tr>
             @endif
         </table>
         @endforeach

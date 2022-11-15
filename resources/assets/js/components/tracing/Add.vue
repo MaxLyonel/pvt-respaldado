@@ -266,9 +266,6 @@ export default {
         }
         this.getProceduretype(this.loan.procedure_modality_id)
         this.borrower = this.loan.borrower[0]
-        if (this.loan.borrower[0].type == "spouses") {
-          this.getSpouse(this.affiliate.id)
-        }
         this.setBreadcrumbs()
         //this.getAddress(this.affiliate.id)
 

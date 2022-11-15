@@ -355,4 +355,34 @@ class LoanGuarantor extends Model
     }
     return $loan_guarantees;
   }
+  public function getTitleAttribute()
+    {
+      $data = "";
+      if ($this->degree) $data = $this->degree->shortened;;
+      return $data;
+    }
+
+    public function degree()
+    {
+        return $this->belongsTo(Degree::class);
+    }
+    public function getFullUnitAttribute()
+    {
+        $data = "";
+        if ($this->unit) $data .= ' ' . $this->unit->district.' - '.$this->unit->name.' ('.$this->unit->shortened.')';
+        return $data;
+    }
+
+    public function unit()
+    {
+      return $this->belongsTo(Unit::class, 'unit_id', 'id');
+    }
+    public function getCategoryAttribute()
+    {
+      $category = null;
+      if($this->category_id){
+        $category =  Category::whereId($this->category_id)->first();
+      }
+      return $category;
+    }
 }

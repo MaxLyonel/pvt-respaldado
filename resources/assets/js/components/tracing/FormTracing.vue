@@ -70,6 +70,13 @@
                           HISTORIAL DEL TRAMITE
                         </v-tab>
 
+                        <v-tab>
+                          <v-icon left>
+                            mdi-monitor-cellphone
+                          </v-icon>
+                          HISTORIAL DE PAGOS
+                        </v-tab>
+
 
                         <!-- E V A L U A C I Ó N   D E   P R E S T A T A R I O -->
                         <v-tab-item>
@@ -515,12 +522,32 @@
 
                               <v-progress-linear></v-progress-linear>
                               <br>
-                              
+
                               <!-- C O M P O N E N T E -->
                               <HistoryFlow
                               :loan.sync="loan">
                               </HistoryFlow>
-                              
+
+                            </v-card-text>
+                          </v-card>
+                        </v-tab-item>
+
+                      <!-- S E C C I Ó N   H I S T O R I A L   D E  P A G O S -->
+                        <v-tab-item>
+                          <v-card flat>
+                            <v-card-text>
+                              <v-col cols="12" md="12" class="py-0" >
+                                <p style="color:teal"><b>HISTORIAL DE PAGOS</b></p>
+                              </v-col>
+
+                              <v-progress-linear></v-progress-linear>
+                              <br>
+
+                              <!-- C O M P O N E N T E -->
+                              <HistoryFlowPayments 
+                                :loan="loan"
+                              />
+
                             </v-card-text>
                           </v-card>
                         </v-tab-item>
@@ -541,12 +568,14 @@
 import DocumentsFlow from "@/components/tracing/DocumentsFlow"
 import ObserverFlow from "@/components/tracing/ObserverFlow"
 import HistoryFlow from "@/components/tracing/HistoryFlow"
+import HistoryFlowPayments from "@/components/tracing/HistoryFlowPayments"
 
 export default {
   components: {
    DocumentsFlow,
    ObserverFlow,
-   HistoryFlow
+   HistoryFlow,
+   HistoryFlowPayments
   },
   name: "specific-data-loan",
   props: {

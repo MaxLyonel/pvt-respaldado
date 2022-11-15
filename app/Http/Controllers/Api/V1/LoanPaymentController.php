@@ -616,8 +616,14 @@ class LoanPaymentController extends Controller
     public function deleteCanceledPaymentRecord(){
         $PendientePago = LoanPaymentState::whereName('Pendiente de Pago')->first()->id;
         $dias = LoanGlobalParameter::latest()->first()->date_delete_payment;
-        $loanPayment = LoanPayment::where('estimated_date','<=',Carbon::now()->subDay($dias))->whereStateId($PendientePago);
-        $loanPayment->delete();
+        $loanPayment = LoanPayment::where('estimated_date','<=',Carbon::now()->subDay($dias))->whereStateId($PendientePago)->get();
+        foreach ($loanPayment as $option) {
+            $payment = LoanPayment::withoutEvents(function () use ($option){
+                $payment = LoanPayment::find($option->id);
+                $payment->state_id = LoanPaymentState::whereName('Anulado')->first()->id;
+                $payment->update();
+            });
+        }
     }
 
     /**
