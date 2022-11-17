@@ -46,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
             'movement_fund_rotatories'=>'App\MovementFundRotatory',
             'movement_concepts'=>'App\MovementConcept',
             'loan_guarantee_registers'=>'App\LoanGuaranteeRegister',
+            'economic_complements' => 'App\EconomicComplement'
 
         ]);
 

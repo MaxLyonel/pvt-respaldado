@@ -1273,7 +1273,28 @@ class LoanController extends Controller
                 'file_title'=>$file_title
             ];
             $information_loan= $this->get_information_loan($loan);
+
             $file_name = implode('_', ['plan', $procedure_modality->shortened, $loan->code]) . '.pdf';
+            // $borrower = $loan->borrower->first();
+
+            // logger($borrower->cell_phone_number);
+            // logger($borrower->id);
+            
+            // $id = $borrower->id;
+            // $number = $borrower->cell_phone_number;
+            // if($number !== "" || !is_null($number)) {
+                // $cell_phone_number = Util::remove_special_char($number);
+            //     $cell_phone_number = '65148120';
+            //     $message = "El préstamo fue desembolsado, favor pasar por las oficinas de MUSERPOL para la entrega del plan de pagos y copia del contrato";
+            //     Util::delegate_shipping($cell_phone_number, $message, $id);
+            // }
+            // logger($id); 
+            // logger($cell_phone_number);
+
+            // $cell_phone_number = '65148120';
+            // $message = "El préstamo fue desembolsado, favor pasar por las oficinas de MUSERPOL para la entrega del plan de pagos y copia del contrato";
+            // Util::delegate_shipping($cell_phone_number, $message, $id);
+            
             $view = view()->make('loan.payments.payment_plan')->with($data)->render();
             if ($standalone) return Util::pdf_to_base64([$view], $file_name, $information_loan, 'legal', $request->copies ?? 1);
             return $view;

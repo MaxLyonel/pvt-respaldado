@@ -16,6 +16,7 @@ use App\Affiliate;
 use App\LoanBorrower;
 use App\LoanGuarantor;
 use Illuminate\Support\Str;
+use App\Notification\NotificationSend;
 
 class Loan extends Model
 {
@@ -1410,5 +1411,9 @@ class Loan extends Model
     public function loan_guarantee_registers()
     {
         return $this->hasMany(LoanGuaranteeRegister::class);
+    }
+
+    public function sends() {
+        return $this->morphMany(NotificationSend::class, 'sendable');
     }
 }
